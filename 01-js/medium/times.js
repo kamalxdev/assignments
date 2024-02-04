@@ -9,5 +9,18 @@ There is no automated test for this one, this is more for you to understand time
 */
 
 function calculateTime(n) {
-    return 0.01;
+    const current_time=new Date;
+    // console.log("Before: ",current_time);
+    let sum =0;
+    for(i=1;i<=n;i++){
+        sum+=i;
+    }
+    const after_calculation_time=new Date;
+    const Difference=(after_calculation_time-current_time)/1000
+    // console.log("after: ",after_calculation_time);
+    // console.log("Difference: ",Difference);
+    // console.log(sum);
+    return Difference;
 }
+
+calculateTime(6500000000)

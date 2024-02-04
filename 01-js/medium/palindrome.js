@@ -4,7 +4,24 @@
 */
 
 function isPalindrome(str) {
-  return true;
+  const original=str.toLowerCase().split("");
+  let check=false;
+  let duplicate=[];
+
+  for(let i=0;i<original.length;i++){
+    str=original[i]
+    if(str=='?'|| str=='!'|| str==','|| str=='.'|| str==" "){
+      original.splice(i,1)
+      i--
+    }
+  }
+  for (let i=original.length;i>0;i--){
+    duplicate[original.length-i]=original[i-1]
+  }
+  if(duplicate.join("")==original.join("")){
+    check=true;
+  }
+  return check;
 }
 
 module.exports = isPalindrome;
