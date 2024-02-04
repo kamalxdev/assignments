@@ -4,7 +4,21 @@
  * the function should return a promise just like before
  */
 
-function sleep(milliseconds) {
-}
 
+function sleep(milliseconds) {
+    function sleepaw(milliseconds){
+        return new Promise((resolve)=>{
+            setTimeout(()=>{
+                resolve();
+            },milliseconds)
+        })
+    }
+    sleepaw(milliseconds)
+    return new Promise((resolve)=>{
+        setTimeout(()=>{
+            resolve();
+        },milliseconds)
+    })
+}
+// sleep(3000).then(() => {console.log("Waited");});
 module.exports = sleep;
