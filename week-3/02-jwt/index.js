@@ -15,6 +15,10 @@ const jwtPassword = 'secret';
  */
 function signJwt(username, password) {
     // Your code here
+    if (!username.includes('@') || username.length < 6 || password.length < 6){
+      return null
+    }
+  return jwt.sign({username, password}, jwtPassword)
 }
 
 /**
@@ -27,6 +31,15 @@ function signJwt(username, password) {
  */
 function verifyJwt(token) {
     // Your code here
+  
+  try {
+     const decoded=jwt.verify(token, jwtPassword)
+  if(decoded){return true}
+    return false
+  } catch (error) {
+     return false
+  }
+  
 }
 
 /**
@@ -38,12 +51,23 @@ function verifyJwt(token) {
  */
 function decodeJwt(token) {
     // Your code here
+  try {
+    if (jwt.decode(token,verify=true)){
+      return true
+    }
+    return false
+  } catch (error) {
+     return false
+  }
 }
 
-
+// const t = signJwt('tugrp@example.com', 'password123')
+// console.log(t)
+// console.log(verifyJwt(t));
+// console.log(decodeJwt(t))
 module.exports = {
   signJwt,
   verifyJwt,
   decodeJwt,
   jwtPassword,
-};
+}
