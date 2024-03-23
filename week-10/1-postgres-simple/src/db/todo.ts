@@ -1,4 +1,4 @@
-import { client } from "..";
+import { client } from "../index"
 /*
  * Function should insert a new todo for this user
  * Should return a todo object
@@ -10,7 +10,14 @@ import { client } from "..";
  * }
  */
 export async function createTodo(userId: number, title: string, description: string) {
+    await client.query(`
+        INSERT INTO todos (user_id, title, description)
+        VALUES ($1, $2, $3)
+    `, [userId, title, description]);
+    let data = await client.query(`SELECT * FROM todos where title=$1 AND user_id=$2 AND description=$3`,[title,userId,description]);
+
     
+    return data.rows[0];
 }
 /*
  * mark done as true for this specific todo.
@@ -23,7 +30,9 @@ export async function createTodo(userId: number, title: string, description: str
  * }
  */
 export async function updateTodo(todoId: number) {
-
+    await client.query(`UPDATE todos SET done =true where id=$1`,[todoId]);
+    let data = await client.query(`SELECT * FROM todos where id=$1`,[todoId]);
+    return data.rows[0];
 }
 
 /*
@@ -37,5 +46,6 @@ export async function updateTodo(todoId: number) {
  * }]
  */
 export async function getTodos(userId: number) {
-
+    let q= await client.query(`SELECT * FROM todos where user_id=$1`,[userId]);
+    return q.rows;
 }
